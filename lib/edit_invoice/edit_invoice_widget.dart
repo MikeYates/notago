@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/schema/enums/enums.dart';
 import '/components/description_field_widget.dart';
 import '/components/price_field_widget.dart';
 import '/components/qty_field_widget.dart';
@@ -8,72 +7,88 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'create_invoice_model.dart';
-export 'create_invoice_model.dart';
+import 'edit_invoice_model.dart';
+export 'edit_invoice_model.dart';
 
-class CreateInvoiceWidget extends StatefulWidget {
-  const CreateInvoiceWidget({super.key});
+class EditInvoiceWidget extends StatefulWidget {
+  const EditInvoiceWidget({
+    super.key,
+    required this.doc,
+  });
+
+  final InvoicesRecord? doc;
 
   @override
-  State<CreateInvoiceWidget> createState() => _CreateInvoiceWidgetState();
+  State<EditInvoiceWidget> createState() => _EditInvoiceWidgetState();
 }
 
-class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
-  late CreateInvoiceModel _model;
+class _EditInvoiceWidgetState extends State<EditInvoiceWidget> {
+  late EditInvoiceModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateInvoiceModel());
+    _model = createModel(context, () => EditInvoiceModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.addToInvoiceItems(InvoiceItemsStruct(
-        createdDate: getCurrentTimestamp,
-        itemName: null,
-        itemDescription: null,
-        itemTotal: 0.0,
-        itemTax: 0.0,
-        itemPrice: 0.0,
-        itemQuantity: 0.0,
-        itemDiscount: 0.0,
-      ));
-      _model.invoiceDate = getCurrentTimestamp;
-      _model.invoiceDueDate = getCurrentTimestamp;
+      _model.invoiceDate = widget.doc?.invoiceDate;
+      _model.invoiceDueDate = widget.doc?.invoiceDueDate;
+      safeSetState(() {});
+      while (_model.indexLoop < widget.doc!.invoiceItems.length) {
+        _model.readInvoiceItem = await InvoiceItemsRecord.getDocumentOnce(
+            widget.doc!.invoiceItems[_model.indexLoop]);
+        _model.addToInvoiceItems(InvoiceItemsStruct(
+          createdDate: _model.readInvoiceItem?.createdDate,
+          createdBy: _model.readInvoiceItem?.createdBy,
+          itemName: _model.readInvoiceItem?.itemName,
+          itemTotal: _model.readInvoiceItem?.itemTotal,
+          itemPrice: _model.readInvoiceItem?.itemPrice,
+          itemTax: valueOrDefault<double>(
+            _model.readInvoiceItem?.itemTax,
+            0.0,
+          ),
+          itemQuantity: _model.readInvoiceItem?.itemQuantity,
+          itemDiscount: valueOrDefault<double>(
+            _model.readInvoiceItem?.itemDiscount,
+            0.0,
+          ),
+        ));
+        safeSetState(() {});
+        _model.indexLoop = _model.indexLoop + 1;
+        safeSetState(() {});
+      }
+      _model.indexLoop = 0;
       safeSetState(() {});
     });
 
-    _model.invoiceNumberTextController ??= TextEditingController(
-        text: 'INV-${random_data.randomString(
-      6,
-      6,
-      false,
-      false,
-      true,
-    )}');
+    _model.invoiceNumberTextController ??=
+        TextEditingController(text: widget.doc?.invoiceNumber);
     _model.invoiceNumberFocusNode ??= FocusNode();
 
     _model.invoiceDateTextController ??= TextEditingController(
-        text: dateTimeFormat("d/M/y", getCurrentTimestamp));
+        text: dateTimeFormat("d/M/y", widget.doc?.invoiceDate));
     _model.invoiceDateFocusNode ??= FocusNode();
 
     _model.invoiceDueDateTextController ??= TextEditingController(
-        text: dateTimeFormat("d/M/y", getCurrentTimestamp));
+        text: dateTimeFormat("d/M/y", widget.doc?.invoiceDueDate));
     _model.invoiceDueDateFocusNode ??= FocusNode();
 
-    _model.recipientNameTextController ??= TextEditingController();
+    _model.recipientNameTextController ??=
+        TextEditingController(text: widget.doc?.receipentName);
     _model.recipientNameFocusNode ??= FocusNode();
 
-    _model.recipientEmailTextController ??= TextEditingController();
+    _model.recipientEmailTextController ??=
+        TextEditingController(text: widget.doc?.receipentEmail);
     _model.recipientEmailFocusNode ??= FocusNode();
 
-    _model.recipientPhoneTextController ??= TextEditingController();
+    _model.recipientPhoneTextController ??=
+        TextEditingController(text: widget.doc?.receipentNumber.toString());
     _model.recipientPhoneFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -139,7 +154,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    'Create',
+                                    'Edit',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -1270,7 +1285,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                     children: [
                                                       DescriptionFieldWidget(
                                                         key: Key(
-                                                            'Keyz3d_${invoiceListIndex}_of_${invoiceList.length}'),
+                                                            'Key07s_${invoiceListIndex}_of_${invoiceList.length}'),
                                                         input: invoiceListItem
                                                             .itemName,
                                                         payload: (value) async {
@@ -1338,7 +1353,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                       children: [
                                                         QtyFieldWidget(
                                                           key: Key(
-                                                              'Keys8f_${invoiceListIndex}_of_${invoiceList.length}'),
+                                                              'Keyluc_${invoiceListIndex}_of_${invoiceList.length}'),
                                                           input: valueOrDefault<
                                                               double>(
                                                             invoiceListItem
@@ -1407,7 +1422,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                           children: [
                                                             PriceFieldWidget(
                                                               key: Key(
-                                                                  'Keywuv_${invoiceListIndex}_of_${invoiceList.length}'),
+                                                                  'Keyt0g_${invoiceListIndex}_of_${invoiceList.length}'),
                                                               input:
                                                                   valueOrDefault<
                                                                       double>(
@@ -1669,59 +1684,46 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                               .validate()) {
                                         return;
                                       }
+                                      while (_model.indexLoop <
+                                          widget.doc!.invoiceItems.length) {
+                                        await widget
+                                            .doc!.invoiceItems[_model.indexLoop]
+                                            .delete();
+                                        _model.indexLoop = _model.indexLoop + 1;
+                                        safeSetState(() {});
+                                      }
+                                      _model.indexLoop = 0;
+                                      safeSetState(() {});
 
-                                      var invoicesRecordReference =
-                                          InvoicesRecord.collection.doc();
-                                      await invoicesRecordReference
-                                          .set(createInvoicesRecordData(
-                                        createdDate: getCurrentTimestamp,
-                                        createdBy: currentUserReference,
-                                        invoiceNumber: _model
-                                            .invoiceNumberTextController.text,
-                                        receipentName: _model
-                                            .recipientNameTextController.text,
-                                        receipentEmail: _model
-                                            .recipientEmailTextController.text,
-                                        invoiceDate: _model.invoiceDate,
-                                        invoiceDueDate: _model.invoiceDueDate,
-                                        invoiceStatus: InvoiceStatus.Unpaid,
-                                        invoiceTotal: functions.sumListDouble(
-                                            _model.invoiceItems
-                                                .map((e) => e.itemTotal)
-                                                .toList()),
-                                        receipentNumber: int.tryParse(_model
-                                            .recipientPhoneTextController.text),
-                                      ));
-                                      _model.createdInvoice =
-                                          InvoicesRecord.getDocumentFromData(
-                                              createInvoicesRecordData(
-                                                createdDate:
-                                                    getCurrentTimestamp,
-                                                createdBy: currentUserReference,
-                                                invoiceNumber: _model
-                                                    .invoiceNumberTextController
-                                                    .text,
-                                                receipentName: _model
-                                                    .recipientNameTextController
-                                                    .text,
-                                                receipentEmail: _model
-                                                    .recipientEmailTextController
-                                                    .text,
-                                                invoiceDate: _model.invoiceDate,
-                                                invoiceDueDate:
-                                                    _model.invoiceDueDate,
-                                                invoiceStatus:
-                                                    InvoiceStatus.Unpaid,
-                                                invoiceTotal: functions
-                                                    .sumListDouble(_model
-                                                        .invoiceItems
-                                                        .map((e) => e.itemTotal)
-                                                        .toList()),
-                                                receipentNumber: int.tryParse(_model
-                                                    .recipientPhoneTextController
-                                                    .text),
-                                              ),
-                                              invoicesRecordReference);
+                                      await widget.doc!.reference.update({
+                                        ...createInvoicesRecordData(
+                                          createdDate: getCurrentTimestamp,
+                                          createdBy: currentUserReference,
+                                          invoiceNumber: _model
+                                              .invoiceNumberTextController.text,
+                                          receipentName: _model
+                                              .recipientNameTextController.text,
+                                          receipentNumber: int.tryParse(_model
+                                              .recipientPhoneTextController
+                                              .text),
+                                          receipentEmail: _model
+                                              .recipientEmailTextController
+                                              .text,
+                                          invoiceDate: _model.invoiceDate,
+                                          invoiceDueDate: _model.invoiceDueDate,
+                                          invoiceStatus:
+                                              widget.doc?.invoiceStatus,
+                                          invoiceTotal: functions.sumListDouble(
+                                              _model.invoiceItems
+                                                  .map((e) => e.itemTotal)
+                                                  .toList()),
+                                        ),
+                                        ...mapToFirestore(
+                                          {
+                                            'invoiceItems': FieldValue.delete(),
+                                          },
+                                        ),
+                                      });
                                       while (_model.indexLoop <
                                           _model.invoiceItems.length) {
                                         var invoiceItemsRecordReference =
@@ -1792,8 +1794,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                 ),
                                                 invoiceItemsRecordReference);
 
-                                        await _model.createdInvoice!.reference
-                                            .update({
+                                        await widget.doc!.reference.update({
                                           ...mapToFirestore(
                                             {
                                               'invoiceItems':
@@ -1807,11 +1808,11 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                         safeSetState(() {});
                                       }
 
-                                      context.pushNamed(
+                                      context.goNamed(
                                         'invoiceDetails',
                                         queryParameters: {
                                           'doc': serializeParam(
-                                            _model.createdInvoice?.reference,
+                                            widget.doc?.reference,
                                             ParamType.DocumentReference,
                                           ),
                                         }.withoutNulls,

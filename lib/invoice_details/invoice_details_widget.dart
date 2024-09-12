@@ -158,6 +158,8 @@ class _InvoiceDetailsWidgetState extends State<InvoiceDetailsWidget> {
                                                       .unfocus(),
                                                   child: InvoiceOptionsWidget(
                                                     invoiceDoc: widget.doc!,
+                                                    doc:
+                                                        invoiceDetailsInvoicesRecord,
                                                   ),
                                                 ),
                                               );
@@ -368,6 +370,26 @@ class _InvoiceDetailsWidgetState extends State<InvoiceDetailsWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                                 ),
+                                                Text(
+                                                  '+${valueOrDefault<String>(
+                                                    invoiceDetailsInvoicesRecord
+                                                        .receipentNumber
+                                                        .toString(),
+                                                    '-',
+                                                  )}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontSize: 12.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
                                               ].divide(const SizedBox(height: 3.0)),
                                             ),
                                           ),
@@ -411,7 +433,7 @@ class _InvoiceDetailsWidgetState extends State<InvoiceDetailsWidget> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Issued',
+                                                    'Tanggal Invoice',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -458,7 +480,7 @@ class _InvoiceDetailsWidgetState extends State<InvoiceDetailsWidget> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Due',
+                                                    'Jatuh Tempo',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -675,7 +697,7 @@ class _InvoiceDetailsWidgetState extends State<InvoiceDetailsWidget> {
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w500,
+                                                                          .normal,
                                                                 ),
                                                           ),
                                                         ],

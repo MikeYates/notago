@@ -1,9 +1,9 @@
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'create_invoice_widget.dart' show CreateInvoiceWidget;
+import 'edit_invoice_widget.dart' show EditInvoiceWidget;
 import 'package:flutter/material.dart';
 
-class CreateInvoiceModel extends FlutterFlowModel<CreateInvoiceWidget> {
+class EditInvoiceModel extends FlutterFlowModel<EditInvoiceWidget> {
   ///  Local state fields for this page.
 
   List<InvoiceItemsStruct> invoiceItems = [];
@@ -28,6 +28,8 @@ class CreateInvoiceModel extends FlutterFlowModel<CreateInvoiceWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
+  // Stores action output result for [Backend Call - Read Document] action in editInvoice widget.
+  InvoiceItemsRecord? readInvoiceItem;
   // State field(s) for invoiceNumber widget.
   FocusNode? invoiceNumberFocusNode;
   TextEditingController? invoiceNumberTextController;
@@ -87,8 +89,6 @@ class CreateInvoiceModel extends FlutterFlowModel<CreateInvoiceWidget> {
     return null;
   }
 
-  // Stores action output result for [Backend Call - Create Document] action in Button widget.
-  InvoicesRecord? createdInvoice;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   InvoiceItemsRecord? invoiceItem;
 

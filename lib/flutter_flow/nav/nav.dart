@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -166,6 +165,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.DocumentReference,
               isList: false,
               collectionNamePath: ['invoices'],
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'editInvoice',
+          path: '/editInvoice',
+          asyncParams: {
+            'doc': getDoc(['invoices'], InvoicesRecord.fromSnapshot),
+          },
+          builder: (context, params) => EditInvoiceWidget(
+            doc: params.getParam(
+              'doc',
+              ParamType.Document,
             ),
           ),
         )

@@ -11,3 +11,4 @@ export '/report/report_widget.dart' show ReportWidget;
 export '/settings/settings_widget.dart' show SettingsWidget;
 export '/invoice_file/invoice_file_widget.dart' show InvoiceFileWidget;
 export '/view_invoice/view_invoice_widget.dart' show ViewInvoiceWidget;
+export '/edit_invoice/edit_invoice_widget.dart' show EditInvoiceWidget;
