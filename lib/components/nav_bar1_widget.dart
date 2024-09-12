@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'nav_bar1_model.dart';
 export 'nav_bar1_model.dart';
 
@@ -38,6 +39,8 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       height: 90.0,
@@ -98,9 +101,11 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                 borderRadius: 30.0,
                 borderWidth: 1.0,
                 buttonSize: 50.0,
-                icon: const Icon(
+                icon: Icon(
                   Icons.home_rounded,
-                  color: Color(0xFF9299A1),
+                  color: FFAppState().nav == 'dashboard'
+                      ? FlutterFlowTheme.of(context).primary
+                      : const Color(0xFF9299A1),
                   size: 24.0,
                 ),
                 onPressed: () async {
@@ -115,12 +120,18 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                 borderRadius: 30.0,
                 borderWidth: 1.0,
                 buttonSize: 50.0,
-                icon: const Icon(
+                icon: Icon(
                   Icons.receipt_rounded,
-                  color: Color(0xFF9299A1),
+                  color: FFAppState().nav == 'invoices'
+                      ? FlutterFlowTheme.of(context).primary
+                      : const Color(0xFF9299A1),
                   size: 24.0,
                 ),
                 onPressed: () async {
+                  if (FFAppState().nav == 'invoices') {
+                    return;
+                  }
+
                   context.pushNamed('invoices');
 
                   FFAppState().nav = 'invoices';
@@ -139,7 +150,7 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                       borderRadius: 25.0,
                       borderWidth: 1.0,
                       buttonSize: 60.0,
-                      fillColor: FlutterFlowTheme.of(context).primary,
+                      fillColor: const Color(0xFF06313A),
                       icon: const Icon(
                         Icons.add,
                         color: Colors.white,
@@ -157,13 +168,18 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                 borderRadius: 30.0,
                 borderWidth: 1.0,
                 buttonSize: 50.0,
-                icon: const Icon(
+                icon: Icon(
                   Icons.bar_chart_rounded,
-                  color: Color(0xFF9299A1),
+                  color: FFAppState().nav == 'report'
+                      ? FlutterFlowTheme.of(context).primary
+                      : const Color(0xFF9299A1),
                   size: 24.0,
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
+                onPressed: () async {
+                  context.pushNamed('report');
+
+                  FFAppState().nav = 'report';
+                  safeSetState(() {});
                 },
               ),
               FlutterFlowIconButton(
@@ -172,7 +188,7 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                 borderWidth: 1.0,
                 buttonSize: 50.0,
                 icon: const Icon(
-                  Icons.person_rounded,
+                  Icons.settings_rounded,
                   color: Color(0xFF9299A1),
                   size: 24.0,
                 ),

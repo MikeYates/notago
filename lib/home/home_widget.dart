@@ -58,7 +58,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.asset(
-                          'assets/images/NotaGo_(1000_x_450_px)_(2).png',
+                          'assets/images/NotaGo_(1000_x_450_px)_(3).png',
                           height: 45.0,
                           fit: BoxFit.cover,
                         ),

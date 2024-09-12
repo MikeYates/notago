@@ -107,6 +107,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'invoiceDetails',
           path: '/invoiceDetails',
+          requireAuth: true,
           builder: (context, params) => InvoiceDetailsWidget(
             doc: params.getParam(
               'doc',
@@ -117,12 +118,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'CreateAccount',
-          path: '/createAccount',
-          builder: (context, params) => const CreateAccountWidget(),
+          name: 'register',
+          path: '/register',
+          builder: (context, params) => const RegisterWidget(),
         ),
         FFRoute(
-          name: 'Login',
+          name: 'login',
           path: '/login',
           builder: (context, params) => const LoginWidget(),
         ),
@@ -130,6 +131,43 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'home',
           path: '/home',
           builder: (context, params) => const HomeWidget(),
+        ),
+        FFRoute(
+          name: 'report',
+          path: '/report',
+          requireAuth: true,
+          builder: (context, params) => const ReportWidget(),
+        ),
+        FFRoute(
+          name: 'settings',
+          path: '/settings',
+          requireAuth: true,
+          builder: (context, params) => const SettingsWidget(),
+        ),
+        FFRoute(
+          name: 'invoiceFile',
+          path: '/invoiceFile',
+          builder: (context, params) => InvoiceFileWidget(
+            invoiceDoc: params.getParam(
+              'invoiceDoc',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['invoices'],
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'viewInvoice',
+          path: '/viewInvoice',
+          requireAuth: true,
+          builder: (context, params) => ViewInvoiceWidget(
+            doc: params.getParam(
+              'doc',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['invoices'],
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -369,7 +407,11 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(
+        hasTransition: true,
+        transitionType: PageTransitionType.fade,
+        duration: Duration(milliseconds: 300),
+      );
 }
 
 class RootPageContext {

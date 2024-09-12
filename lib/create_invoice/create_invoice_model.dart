@@ -27,6 +27,7 @@ class CreateInvoiceModel extends FlutterFlowModel<CreateInvoiceWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  final formKey = GlobalKey<FormState>();
   // State field(s) for invoiceNumber widget.
   FocusNode? invoiceNumberFocusNode;
   TextEditingController? invoiceNumberTextController;
@@ -42,21 +43,48 @@ class CreateInvoiceModel extends FlutterFlowModel<CreateInvoiceWidget> {
   String? Function(BuildContext, String?)?
       invoiceDueDateTextControllerValidator;
   DateTime? datePicked2;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController5;
-  String? Function(BuildContext, String?)? textController5Validator;
+  // State field(s) for recipientName widget.
+  FocusNode? recipientNameFocusNode;
+  TextEditingController? recipientNameTextController;
+  String? Function(BuildContext, String?)? recipientNameTextControllerValidator;
+  String? _recipientNameTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    return null;
+  }
+
+  // State field(s) for recipientEmail widget.
+  FocusNode? recipientEmailFocusNode;
+  TextEditingController? recipientEmailTextController;
+  String? Function(BuildContext, String?)?
+      recipientEmailTextControllerValidator;
+  String? _recipientEmailTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'Has to be a valid email address.';
+    }
+    return null;
+  }
+
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   InvoicesRecord? createdInvoice;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   InvoiceItemsRecord? invoiceItem;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    recipientNameTextControllerValidator =
+        _recipientNameTextControllerValidator;
+    recipientEmailTextControllerValidator =
+        _recipientEmailTextControllerValidator;
+  }
 
   @override
   void dispose() {
@@ -69,10 +97,10 @@ class CreateInvoiceModel extends FlutterFlowModel<CreateInvoiceWidget> {
     invoiceDueDateFocusNode?.dispose();
     invoiceDueDateTextController?.dispose();
 
-    textFieldFocusNode1?.dispose();
-    textController4?.dispose();
+    recipientNameFocusNode?.dispose();
+    recipientNameTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController5?.dispose();
+    recipientEmailFocusNode?.dispose();
+    recipientEmailTextController?.dispose();
   }
 }

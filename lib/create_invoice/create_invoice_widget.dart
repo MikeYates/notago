@@ -66,11 +66,11 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
         text: dateTimeFormat("d/M/y", getCurrentTimestamp));
     _model.invoiceDueDateFocusNode ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.recipientNameTextController ??= TextEditingController();
+    _model.recipientNameFocusNode ??= FocusNode();
 
-    _model.textController5 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.recipientEmailTextController ??= TextEditingController();
+    _model.recipientEmailFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -101,7 +101,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                     children: [
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            15.0, 0.0, 15.0, 0.0),
+                            15.0, 15.0, 15.0, 0.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -188,11 +188,13 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Invoice Details',
+                                    'Nomor In voice',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Inter',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -278,7 +280,23 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                       Expanded(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
+                                            Text(
+                                              'Tanggal ',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
                                             SizedBox(
                                               width: 200.0,
                                               child: Stack(
@@ -518,13 +536,29 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                 ],
                                               ),
                                             ),
-                                          ],
+                                          ].divide(const SizedBox(height: 10.0)),
                                         ),
                                       ),
                                       Expanded(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
+                                            Text(
+                                              'Jatuh Tempo',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
                                             SizedBox(
                                               width: 200.0,
                                               child: Stack(
@@ -769,7 +803,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                 ],
                                               ),
                                             ),
-                                          ],
+                                          ].divide(const SizedBox(height: 10.0)),
                                         ),
                                       ),
                                     ].divide(const SizedBox(width: 10.0)),
@@ -787,185 +821,190 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5.0, 0.0, 0.0, 0.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Icon(
-                                          Icons.person,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          size: 18.0,
-                                        ),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Text(
-                                              'Recipient',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                              child: Form(
+                                key: _model.formKey,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          5.0, 0.0, 0.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                'Penerima',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ].divide(const SizedBox(width: 5.0)),
+                                      ),
+                                    ),
+                                    TextFormField(
+                                      controller:
+                                          _model.recipientNameTextController,
+                                      focusNode: _model.recipientNameFocusNode,
+                                      autofocus: false,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
                                             ),
-                                          ],
+                                        hintText: 'Nama Penerima',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                      ].divide(const SizedBox(width: 5.0)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      validator: _model
+                                          .recipientNameTextControllerValidator
+                                          .asValidator(context),
                                     ),
-                                  ),
-                                  TextFormField(
-                                    controller: _model.textController4,
-                                    focusNode: _model.textFieldFocusNode1,
-                                    autofocus: false,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
+                                    TextFormField(
+                                      controller:
+                                          _model.recipientEmailTextController,
+                                      focusNode: _model.recipientEmailFocusNode,
+                                      autofocus: false,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: 'Email Penerima',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      hintText: 'Recipient Name',
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      validator: _model
+                                          .recipientEmailTextControllerValidator
+                                          .asValidator(context),
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    cursorColor: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    validator: _model.textController4Validator
-                                        .asValidator(context),
-                                  ),
-                                  TextFormField(
-                                    controller: _model.textController5,
-                                    focusNode: _model.textFieldFocusNode2,
-                                    autofocus: false,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      hintText: 'Email',
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    cursorColor: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    validator: _model.textController5Validator
-                                        .asValidator(context),
-                                  ),
-                                ].divide(const SizedBox(height: 10.0)),
+                                  ].divide(const SizedBox(height: 10.0)),
+                                ),
                               ),
                             ),
                           ],
@@ -983,7 +1022,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Items',
+                                    'Rincian',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -1036,7 +1075,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            'Add Items',
+                                            'Tambah',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1049,7 +1088,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                           ),
                                         ].divide(const SizedBox(height: 10.0)),
                                       ),
-                                    ],
+                                    ].divide(const SizedBox(width: 5.0)),
                                   ),
                                 ],
                               ),
@@ -1104,7 +1143,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                       MainAxisSize.max,
                                                   children: [
                                                     Text(
-                                                      'Description',
+                                                      'Deskripsi',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -1112,7 +1151,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                             fontFamily: 'Inter',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .primaryText,
+                                                                .secondaryText,
                                                             letterSpacing: 0.0,
                                                           ),
                                                     ),
@@ -1202,7 +1241,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                     'Inter',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryText,
+                                                                    .secondaryText,
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -1261,7 +1300,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                             MainAxisSize.max,
                                                         children: [
                                                           Text(
-                                                            'Price',
+                                                            'Harga',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
@@ -1270,7 +1309,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                       'Inter',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryText,
+                                                                      .secondaryText,
                                                                   letterSpacing:
                                                                       0.0,
                                                                 ),
@@ -1354,7 +1393,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                         'Inter',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .primaryText,
+                                                                        .secondaryText,
                                                                     letterSpacing:
                                                                         0.0,
                                                                   ),
@@ -1376,29 +1415,59 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
-                                                            Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                'Rp. ${valueOrDefault<String>(
-                                                                  invoiceListItem
-                                                                      .itemTotal
-                                                                      .toString(),
-                                                                  '0',
-                                                                )}',
-                                                                '-',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    color: FlutterFlowTheme.of(
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Container(
+                                                                width: MediaQuery.sizeOf(
                                                                             context)
-                                                                        .primaryText,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
+                                                                        .width *
+                                                                    1.0,
+                                                                height: 40.0,
+                                                                decoration:
+                                                                    const BoxDecoration(),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                        'Rp. ${valueOrDefault<String>(
+                                                                          invoiceListItem
+                                                                              .itemTotal
+                                                                              .toString(),
+                                                                          '0',
+                                                                        )}',
+                                                                        '-',
+                                                                      ),
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Inter',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -1460,6 +1529,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                           fontFamily: 'Inter',
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
+                                          fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -1507,175 +1577,189 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                 ].divide(const SizedBox(height: 5.0)),
                               ),
                             ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FFButtonWidget(
-                                  onPressed: () async {
-                                    var invoicesRecordReference =
-                                        InvoicesRecord.collection.doc();
-                                    await invoicesRecordReference
-                                        .set(createInvoicesRecordData(
-                                      createdDate: getCurrentTimestamp,
-                                      createdBy: currentUserReference,
-                                      invoiceNumber: _model
-                                          .invoiceNumberTextController.text,
-                                      receipentName:
-                                          _model.textController4.text,
-                                      receipentEmail:
-                                          _model.textController5.text,
-                                      invoiceDate: _model.invoiceDate,
-                                      invoiceDueDate: _model.invoiceDueDate,
-                                      invoiceStatus: InvoiceStatus.Unpaid,
-                                      invoiceTotal: functions.sumListDouble(
-                                          _model.invoiceItems
-                                              .map((e) => e.itemTotal)
-                                              .toList()),
-                                    ));
-                                    _model.createdInvoice =
-                                        InvoicesRecord.getDocumentFromData(
-                                            createInvoicesRecordData(
-                                              createdDate: getCurrentTimestamp,
-                                              createdBy: currentUserReference,
-                                              invoiceNumber: _model
-                                                  .invoiceNumberTextController
-                                                  .text,
-                                              receipentName:
-                                                  _model.textController4.text,
-                                              receipentEmail:
-                                                  _model.textController5.text,
-                                              invoiceDate: _model.invoiceDate,
-                                              invoiceDueDate:
-                                                  _model.invoiceDueDate,
-                                              invoiceStatus:
-                                                  InvoiceStatus.Unpaid,
-                                              invoiceTotal:
-                                                  functions.sumListDouble(_model
-                                                      .invoiceItems
-                                                      .map((e) => e.itemTotal)
-                                                      .toList()),
-                                            ),
-                                            invoicesRecordReference);
-                                    while (_model.indexLoop <
-                                        _model.invoiceItems.length) {
-                                      var invoiceItemsRecordReference =
-                                          InvoiceItemsRecord.collection.doc();
-                                      await invoiceItemsRecordReference
-                                          .set(createInvoiceItemsRecordData(
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FFButtonWidget(
+                                    onPressed: () async {
+                                      var invoicesRecordReference =
+                                          InvoicesRecord.collection.doc();
+                                      await invoicesRecordReference
+                                          .set(createInvoicesRecordData(
                                         createdDate: getCurrentTimestamp,
                                         createdBy: currentUserReference,
-                                        itemName: _model
-                                            .invoiceItems[_model.indexLoop]
-                                            .itemName,
-                                        itemTotal: valueOrDefault<double>(
-                                          _model.invoiceItems[_model.indexLoop]
-                                              .itemTotal,
-                                          0.0,
-                                        ),
-                                        itemPrice: valueOrDefault<double>(
-                                          _model.invoiceItems[_model.indexLoop]
-                                              .itemPrice,
-                                          0.0,
-                                        ),
-                                        itemQuantity: valueOrDefault<double>(
-                                          _model.invoiceItems[_model.indexLoop]
-                                              .itemQuantity,
-                                          0.0,
-                                        ),
-                                        referenceDocId: _model.docID,
+                                        invoiceNumber: _model
+                                            .invoiceNumberTextController.text,
+                                        receipentName: _model
+                                            .recipientNameTextController.text,
+                                        receipentEmail: _model
+                                            .recipientEmailTextController.text,
+                                        invoiceDate: _model.invoiceDate,
+                                        invoiceDueDate: _model.invoiceDueDate,
+                                        invoiceStatus: InvoiceStatus.Unpaid,
+                                        invoiceTotal: functions.sumListDouble(
+                                            _model.invoiceItems
+                                                .map((e) => e.itemTotal)
+                                                .toList()),
                                       ));
-                                      _model.invoiceItem = InvoiceItemsRecord
-                                          .getDocumentFromData(
-                                              createInvoiceItemsRecordData(
+                                      _model.createdInvoice =
+                                          InvoicesRecord.getDocumentFromData(
+                                              createInvoicesRecordData(
                                                 createdDate:
                                                     getCurrentTimestamp,
                                                 createdBy: currentUserReference,
-                                                itemName: _model
-                                                    .invoiceItems[
-                                                        _model.indexLoop]
-                                                    .itemName,
-                                                itemTotal:
-                                                    valueOrDefault<double>(
-                                                  _model
-                                                      .invoiceItems[
-                                                          _model.indexLoop]
-                                                      .itemTotal,
-                                                  0.0,
-                                                ),
-                                                itemPrice:
-                                                    valueOrDefault<double>(
-                                                  _model
-                                                      .invoiceItems[
-                                                          _model.indexLoop]
-                                                      .itemPrice,
-                                                  0.0,
-                                                ),
-                                                itemQuantity:
-                                                    valueOrDefault<double>(
-                                                  _model
-                                                      .invoiceItems[
-                                                          _model.indexLoop]
-                                                      .itemQuantity,
-                                                  0.0,
-                                                ),
-                                                referenceDocId: _model.docID,
+                                                invoiceNumber: _model
+                                                    .invoiceNumberTextController
+                                                    .text,
+                                                receipentName: _model
+                                                    .recipientNameTextController
+                                                    .text,
+                                                receipentEmail: _model
+                                                    .recipientEmailTextController
+                                                    .text,
+                                                invoiceDate: _model.invoiceDate,
+                                                invoiceDueDate:
+                                                    _model.invoiceDueDate,
+                                                invoiceStatus:
+                                                    InvoiceStatus.Unpaid,
+                                                invoiceTotal: functions
+                                                    .sumListDouble(_model
+                                                        .invoiceItems
+                                                        .map((e) => e.itemTotal)
+                                                        .toList()),
                                               ),
-                                              invoiceItemsRecordReference);
+                                              invoicesRecordReference);
+                                      while (_model.indexLoop <
+                                          _model.invoiceItems.length) {
+                                        var invoiceItemsRecordReference =
+                                            InvoiceItemsRecord.collection.doc();
+                                        await invoiceItemsRecordReference
+                                            .set(createInvoiceItemsRecordData(
+                                          createdDate: getCurrentTimestamp,
+                                          createdBy: currentUserReference,
+                                          itemName: _model
+                                              .invoiceItems[_model.indexLoop]
+                                              .itemName,
+                                          itemTotal: valueOrDefault<double>(
+                                            _model
+                                                .invoiceItems[_model.indexLoop]
+                                                .itemTotal,
+                                            0.0,
+                                          ),
+                                          itemPrice: valueOrDefault<double>(
+                                            _model
+                                                .invoiceItems[_model.indexLoop]
+                                                .itemPrice,
+                                            0.0,
+                                          ),
+                                          itemQuantity: valueOrDefault<double>(
+                                            _model
+                                                .invoiceItems[_model.indexLoop]
+                                                .itemQuantity,
+                                            0.0,
+                                          ),
+                                          referenceDocId: _model.docID,
+                                        ));
+                                        _model.invoiceItem = InvoiceItemsRecord
+                                            .getDocumentFromData(
+                                                createInvoiceItemsRecordData(
+                                                  createdDate:
+                                                      getCurrentTimestamp,
+                                                  createdBy:
+                                                      currentUserReference,
+                                                  itemName: _model
+                                                      .invoiceItems[
+                                                          _model.indexLoop]
+                                                      .itemName,
+                                                  itemTotal:
+                                                      valueOrDefault<double>(
+                                                    _model
+                                                        .invoiceItems[
+                                                            _model.indexLoop]
+                                                        .itemTotal,
+                                                    0.0,
+                                                  ),
+                                                  itemPrice:
+                                                      valueOrDefault<double>(
+                                                    _model
+                                                        .invoiceItems[
+                                                            _model.indexLoop]
+                                                        .itemPrice,
+                                                    0.0,
+                                                  ),
+                                                  itemQuantity:
+                                                      valueOrDefault<double>(
+                                                    _model
+                                                        .invoiceItems[
+                                                            _model.indexLoop]
+                                                        .itemQuantity,
+                                                    0.0,
+                                                  ),
+                                                  referenceDocId: _model.docID,
+                                                ),
+                                                invoiceItemsRecordReference);
 
-                                      await _model.createdInvoice!.reference
-                                          .update({
-                                        ...mapToFirestore(
-                                          {
-                                            'invoiceItems':
-                                                FieldValue.arrayUnion([
-                                              _model.invoiceItem?.reference
-                                            ]),
-                                          },
-                                        ),
-                                      });
-                                      _model.indexLoop = _model.indexLoop + 1;
+                                        await _model.createdInvoice!.reference
+                                            .update({
+                                          ...mapToFirestore(
+                                            {
+                                              'invoiceItems':
+                                                  FieldValue.arrayUnion([
+                                                _model.invoiceItem?.reference
+                                              ]),
+                                            },
+                                          ),
+                                        });
+                                        _model.indexLoop = _model.indexLoop + 1;
+                                        safeSetState(() {});
+                                      }
+
+                                      context.pushNamed(
+                                        'invoiceDetails',
+                                        queryParameters: {
+                                          'doc': serializeParam(
+                                            _model.createdInvoice?.reference,
+                                            ParamType.DocumentReference,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+
                                       safeSetState(() {});
-                                    }
-
-                                    context.pushNamed(
-                                      'invoiceDetails',
-                                      queryParameters: {
-                                        'doc': serializeParam(
-                                          _model.createdInvoice?.reference,
-                                          ParamType.DocumentReference,
-                                        ),
-                                      }.withoutNulls,
-                                    );
-
-                                    safeSetState(() {});
-                                  },
-                                  text: 'Send',
-                                  icon: const Icon(
-                                    Icons.send_rounded,
-                                    size: 15.0,
+                                    },
+                                    text: 'Simpan',
+                                    icon: const Icon(
+                                      Icons.check_rounded,
+                                      size: 15.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      width: 125.0,
+                                      height: 40.0,
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            color: Colors.white,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
                                   ),
-                                  options: FFButtonOptions(
-                                    height: 40.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          color: Colors.white,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    elevation: 0.0,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),

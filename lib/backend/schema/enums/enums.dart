@@ -5,6 +5,11 @@ enum InvoiceStatus {
   Unpaid,
 }
 
+enum NotificationType {
+  Payment,
+  Overdue,
+}
+
 extension FFEnumExtensions<T extends Enum> on T {
   String serialize() => name;
 }
@@ -18,6 +23,8 @@ T? deserializeEnum<T>(String? value) {
   switch (T) {
     case (InvoiceStatus):
       return InvoiceStatus.values.deserialize(value) as T?;
+    case (NotificationType):
+      return NotificationType.values.deserialize(value) as T?;
     default:
       return null;
   }

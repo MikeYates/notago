@@ -83,14 +83,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 32.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'brand.ai',
-                              style: FlutterFlowTheme.of(context)
-                                  .displaySmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/NotaGo_(1000_x_450_px)_(1000_x_1000_px).png',
+                                height: 45.0,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -103,7 +102,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Welcome Back',
+                                  'Selamat Datang',
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
                                       .override(
@@ -115,7 +114,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 12.0, 0.0, 24.0),
                                   child: Text(
-                                    'Let\'s get started by filling out the form below.',
+                                    'Please enter your login details.',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -304,7 +303,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       context.goNamedAuth(
                                           'dashboard', context.mounted);
                                     },
-                                    text: 'Sign In',
+                                    text: 'Masuk',
                                     options: FFButtonOptions(
                                       width: 370.0,
                                       height: 44.0,
@@ -342,11 +341,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     text: TextSpan(
                                       children: [
                                         const TextSpan(
-                                          text: 'Don\'t have an account? ',
+                                          text: 'Belum punya akun? ',
                                           style: TextStyle(),
                                         ),
                                         TextSpan(
-                                          text: ' Sign Up here',
+                                          text: 'Daftar di sini',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -360,8 +359,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           mouseCursor: SystemMouseCursors.click,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () async {
-                                              context
-                                                  .pushNamed('CreateAccount');
+                                              context.pushNamed('register');
                                             },
                                         )
                                       ],

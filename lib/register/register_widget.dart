@@ -5,25 +5,25 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'create_account_model.dart';
-export 'create_account_model.dart';
+import 'register_model.dart';
+export 'register_model.dart';
 
-class CreateAccountWidget extends StatefulWidget {
-  const CreateAccountWidget({super.key});
+class RegisterWidget extends StatefulWidget {
+  const RegisterWidget({super.key});
 
   @override
-  State<CreateAccountWidget> createState() => _CreateAccountWidgetState();
+  State<RegisterWidget> createState() => _RegisterWidgetState();
 }
 
-class _CreateAccountWidgetState extends State<CreateAccountWidget> {
-  late CreateAccountModel _model;
+class _RegisterWidgetState extends State<RegisterWidget> {
+  late RegisterModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateAccountModel());
+    _model = createModel(context, () => RegisterModel());
 
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
@@ -87,14 +87,13 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 32.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'NotaGo',
-                              style: FlutterFlowTheme.of(context)
-                                  .displaySmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/NotaGo_(1000_x_450_px)_(1000_x_1000_px).png',
+                                height: 45.0,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -107,7 +106,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Create an account',
+                                  'Daftar Baru',
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
                                       .override(
@@ -452,11 +451,11 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     text: TextSpan(
                                       children: [
                                         const TextSpan(
-                                          text: 'Already have an account? ',
+                                          text: 'Sudah punya akun? ',
                                           style: TextStyle(),
                                         ),
                                         TextSpan(
-                                          text: 'Sign In here',
+                                          text: 'Masuk di sini',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -471,7 +470,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                           mouseCursor: SystemMouseCursors.click,
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () async {
-                                              context.pushNamed('Login');
+                                              context.pushNamed('login');
                                             },
                                         )
                                       ],

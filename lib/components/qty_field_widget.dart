@@ -84,8 +84,8 @@ class _QtyFieldWidgetState extends State<QtyFieldWidget> {
             borderRadius: BorderRadius.circular(8.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Color(0x00000000),
+            borderSide: BorderSide(
+              color: FlutterFlowTheme.of(context).primary,
               width: 1.0,
             ),
             borderRadius: BorderRadius.circular(8.0),
