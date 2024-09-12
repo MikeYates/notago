@@ -110,7 +110,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
                                       .override(
-                                        fontFamily: 'Readex Pro',
+                                        fontFamily: 'Inter',
                                         letterSpacing: 0.0,
                                       ),
                                 ),

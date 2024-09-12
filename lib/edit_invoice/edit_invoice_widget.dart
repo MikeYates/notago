@@ -470,7 +470,7 @@ class _EditInvoiceWidgetState extends State<EditInvoiceWidget> {
                                                                       .headlineLarge
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Readex Pro',
+                                                                            'Inter',
                                                                         fontSize:
                                                                             32.0,
                                                                         letterSpacing:
@@ -733,7 +733,7 @@ class _EditInvoiceWidgetState extends State<EditInvoiceWidget> {
                                                                       .headlineLarge
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Readex Pro',
+                                                                            'Inter',
                                                                         fontSize:
                                                                             32.0,
                                                                         letterSpacing:

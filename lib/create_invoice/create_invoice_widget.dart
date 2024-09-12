@@ -455,7 +455,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                       .headlineLarge
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Readex Pro',
+                                                                            'Inter',
                                                                         fontSize:
                                                                             32.0,
                                                                         letterSpacing:
@@ -718,7 +718,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                       .headlineLarge
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Readex Pro',
+                                                                            'Inter',
                                                                         fontSize:
                                                                             32.0,
                                                                         letterSpacing:

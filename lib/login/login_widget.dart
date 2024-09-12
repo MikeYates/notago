@@ -106,7 +106,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
                                       .override(
-                                        fontFamily: 'Readex Pro',
+                                        fontFamily: 'Inter',
                                         letterSpacing: 0.0,
                                       ),
                                 ),

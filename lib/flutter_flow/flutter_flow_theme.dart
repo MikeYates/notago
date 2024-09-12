@@ -159,44 +159,44 @@ class ThemeTypography extends Typography {
 
   final FlutterFlowTheme theme;
 
-  String get displayLargeFamily => 'Readex Pro';
+  String get displayLargeFamily => 'Inter';
   TextStyle get displayLarge => GoogleFonts.getFont(
-        'Readex Pro',
+        'Inter',
         color: theme.primaryText,
         fontWeight: FontWeight.w300,
         fontSize: 52.0,
       );
-  String get displayMediumFamily => 'Readex Pro';
+  String get displayMediumFamily => 'Inter';
   TextStyle get displayMedium => GoogleFonts.getFont(
-        'Readex Pro',
+        'Inter',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 44.0,
       );
-  String get displaySmallFamily => 'Readex Pro';
+  String get displaySmallFamily => 'Inter';
   TextStyle get displaySmall => GoogleFonts.getFont(
-        'Readex Pro',
+        'Inter',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 36.0,
       );
-  String get headlineLargeFamily => 'Readex Pro';
+  String get headlineLargeFamily => 'Inter';
   TextStyle get headlineLarge => GoogleFonts.getFont(
-        'Readex Pro',
+        'Inter',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 32.0,
       );
-  String get headlineMediumFamily => 'Readex Pro';
+  String get headlineMediumFamily => 'Inter';
   TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Readex Pro',
+        'Inter',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 28.0,
       );
-  String get headlineSmallFamily => 'Readex Pro';
+  String get headlineSmallFamily => 'Inter';
   TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Readex Pro',
+        'Inter',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 24.0,

@@ -187,13 +187,18 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                 borderRadius: 30.0,
                 borderWidth: 1.0,
                 buttonSize: 50.0,
-                icon: const Icon(
+                icon: Icon(
                   Icons.settings_rounded,
-                  color: Color(0xFF9299A1),
+                  color: FFAppState().nav == 'settings'
+                      ? FlutterFlowTheme.of(context).primary
+                      : const Color(0xFF9299A1),
                   size: 24.0,
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
+                onPressed: () async {
+                  context.pushNamed('settings');
+
+                  FFAppState().nav = 'settings';
+                  safeSetState(() {});
                 },
               ),
             ],

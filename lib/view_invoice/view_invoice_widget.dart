@@ -366,6 +366,26 @@ class _ViewInvoiceWidgetState extends State<ViewInvoiceWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
+                                            Text(
+                                              '+${valueOrDefault<String>(
+                                                viewInvoiceInvoicesRecord
+                                                    .receipentNumber
+                                                    .toString(),
+                                                '-',
+                                              )}',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontSize: 12.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
                                           ].divide(const SizedBox(height: 3.0)),
                                         ),
                                       ),
@@ -395,7 +415,7 @@ class _ViewInvoiceWidgetState extends State<ViewInvoiceWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Issued',
+                                                'Tanggal Invoice',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -442,7 +462,7 @@ class _ViewInvoiceWidgetState extends State<ViewInvoiceWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Due',
+                                                'Jatuh Tempo',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
