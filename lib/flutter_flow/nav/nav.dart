@@ -180,6 +180,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.Document,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'refundPolicy',
+          path: '/refundPolicy',
+          builder: (context, params) => const RefundPolicyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
