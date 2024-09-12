@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "950430624090",
+    "project_id": "nota-go-71xzqz",
+    "storage_bucket": "nota-go-71xzqz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950430624090:android:28bb02eab50e42f5dc2b63",
+        "android_client_info": {
+          "package_name": "com.mycompany.notago"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqVW0poEDL7HGX2WYOfVoXB-O-Vj2W6xU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
