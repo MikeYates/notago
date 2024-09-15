@@ -25,12 +25,16 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  aligned_dialog: 0.0.6
   auto_size_text: 3.0.0
   badges: 2.0.2
   cached_network_image: 3.3.1
   cloud_firestore: 4.17.3
   cloud_firestore_platform_interface: 6.2.3
   cloud_firestore_web: 3.12.3
+  cloud_functions: 4.7.4
+  cloud_functions_platform_interface: 5.5.26
+  cloud_functions_web: 4.9.4
   collection: 1.18.0
   easy_debounce: 2.0.1
   equatable: 2.0.5

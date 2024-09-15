@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/enums/enums.dart';
 import '/components/invoice_options_widget.dart';
@@ -261,43 +262,119 @@ class _InvoiceDetailsWidgetState extends State<InvoiceDetailsWidget> {
                                         Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    invoiceDetailsInvoicesRecord
-                                                                .invoiceStatus ==
-                                                            InvoiceStatus.Paid
-                                                        ? const Color(0xFFD2F1D2)
-                                                        : const Color(0xFFFAEDD3),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 10.0, 15.0, 10.0),
-                                                child: Text(
-                                                  valueOrDefault<String>(
-                                                    invoiceDetailsInvoicesRecord
-                                                        .invoiceStatus?.name,
-                                                    '-',
+                                            InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                _model.checkPayment =
+                                                    await queryInvoicePaymentsRecordOnce(
+                                                  queryBuilder:
+                                                      (invoicePaymentsRecord) =>
+                                                          invoicePaymentsRecord
+                                                              .where(
+                                                    'referenceInvoice',
+                                                    isEqualTo: widget.doc,
                                                   ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color: invoiceDetailsInvoicesRecord
-                                                                    .invoiceStatus ==
-                                                                InvoiceStatus
-                                                                    .Paid
-                                                            ? FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary
-                                                            : const Color(0xFFE59B12),
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                                );
+                                                if ((_model.checkPayment !=
+                                                            null &&
+                                                        (_model.checkPayment)!
+                                                            .isNotEmpty) ==
+                                                    true) {
+                                                  await _model.checkPayment!
+                                                      .first.reference
+                                                      .delete();
+
+                                                  await widget.doc!.update(
+                                                      createInvoicesRecordData(
+                                                    invoiceStatus:
+                                                        InvoiceStatus.Unpaid,
+                                                  ));
+                                                } else {
+                                                  await InvoicePaymentsRecord
+                                                      .collection
+                                                      .doc()
+                                                      .set(
+                                                          createInvoicePaymentsRecordData(
+                                                        createdAt:
+                                                            getCurrentTimestamp,
+                                                        referenceInvoice:
+                                                            widget.doc,
+                                                        amount:
+                                                            invoiceDetailsInvoicesRecord
+                                                                .invoiceTotal,
+                                                        paymentMethod:
+                                                            'Virtual Account',
+                                                        createdBy:
+                                                            currentUserReference,
+                                                      ));
+
+                                                  await widget.doc!.update(
+                                                      createInvoicesRecordData(
+                                                    invoiceStatus:
+                                                        InvoiceStatus.Paid,
+                                                  ));
+
+                                                  await NotificationRecord
+                                                      .collection
+                                                      .doc()
+                                                      .set(
+                                                          createNotificationRecordData(
+                                                        createdDate:
+                                                            getCurrentTimestamp,
+                                                        createdBy:
+                                                            currentUserReference,
+                                                        invoiceDocument:
+                                                            widget.doc,
+                                                        isRead: false,
+                                                      ));
+                                                }
+
+                                                safeSetState(() {});
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: invoiceDetailsInvoicesRecord
+                                                              .invoiceStatus ==
+                                                          InvoiceStatus.Paid
+                                                      ? const Color(0xFFD2F1D2)
+                                                      : const Color(0xFFFAEDD3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(15.0, 10.0,
+                                                          15.0, 10.0),
+                                                  child: Text(
+                                                    valueOrDefault<String>(
+                                                      invoiceDetailsInvoicesRecord
+                                                          .invoiceStatus?.name,
+                                                      '-',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: invoiceDetailsInvoicesRecord
+                                                                      .invoiceStatus ==
+                                                                  InvoiceStatus
+                                                                      .Paid
+                                                              ? FlutterFlowTheme
+                                                                      .of(
+                                                                          context)
+                                                                  .primary
+                                                              : const Color(
+                                                                  0xFFE59B12),
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -1061,6 +1138,240 @@ class _InvoiceDetailsWidgetState extends State<InvoiceDetailsWidget> {
                                                   ],
                                                 ),
                                               ),
+                                            ),
+                                          ].divide(const SizedBox(height: 15.0)),
+                                        ),
+                                      ),
+                                    ),
+                                  ].divide(const SizedBox(height: 20.0)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                15.0, 20.0, 15.0, 0.0),
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * 1.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Payment',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  0.15,
+                                          decoration: const BoxDecoration(),
+                                        ),
+                                      ].divide(const SizedBox(width: 10.0)),
+                                    ),
+                                    Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          1.0,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0x262BD196),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Total',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 5.0)),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Rp. ${valueOrDefault<String>(
+                                                          formatNumber(
+                                                            invoiceDetailsInvoicesRecord
+                                                                .invoiceTotal,
+                                                            formatType:
+                                                                FormatType
+                                                                    .decimal,
+                                                            decimalType:
+                                                                DecimalType
+                                                                    .automatic,
+                                                          ),
+                                                          '0',
+                                                        )}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 5.0)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Tax',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 5.0)),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Rp. 0',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 5.0)),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ].divide(const SizedBox(height: 15.0)),
                                         ),

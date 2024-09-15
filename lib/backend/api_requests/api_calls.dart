@@ -81,6 +81,66 @@ class GeneratePDFCall {
 
 /// End FlutterFlow + PDF ApiFlow API Group Code
 
+class ActivateAccountCall {
+  static Future<ApiCallResponse> call({
+    String? accountId = '',
+    String? membershipDuration = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "accountId": "$accountId",
+  "membershipDuration": "$membershipDuration"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'activateAccount',
+      apiUrl: 'https://hook.us1.make.com/ogt1tsfmhgbtf2nvfaavcvy6vk74pcsi',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class CheckUserMembershipCall {
+  static Future<ApiCallResponse> call({
+    String? accountID = 'X6HyZ6u7urWGkwR2pLq8REVigRV2',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "accountId": "$accountID"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Check User Membership',
+      apiUrl: 'https://hook.us1.make.com/jkkrgpqyjybrbmv5vqw5p1pjft9ad5oq',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? isActivated(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.isActivated''',
+      ));
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

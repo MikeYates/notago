@@ -185,6 +185,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'refundPolicy',
           path: '/refundPolicy',
           builder: (context, params) => const RefundPolicyWidget(),
+        ),
+        FFRoute(
+          name: 'contact',
+          path: '/contact',
+          builder: (context, params) => const ContactWidget(),
+        ),
+        FFRoute(
+          name: 'checkout',
+          path: '/checkout',
+          builder: (context, params) => const CheckoutWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

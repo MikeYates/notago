@@ -45,6 +45,26 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "bankName" field.
+  String? _bankName;
+  String get bankName => _bankName ?? '';
+  bool hasBankName() => _bankName != null;
+
+  // "bankAccountNumber" field.
+  int? _bankAccountNumber;
+  int get bankAccountNumber => _bankAccountNumber ?? 0;
+  bool hasBankAccountNumber() => _bankAccountNumber != null;
+
+  // "bankAccountName" field.
+  String? _bankAccountName;
+  String get bankAccountName => _bankAccountName ?? '';
+  bool hasBankAccountName() => _bankAccountName != null;
+
+  // "isActive" field.
+  bool? _isActive;
+  bool get isActive => _isActive ?? false;
+  bool hasIsActive() => _isActive != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -52,6 +72,10 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _bankName = snapshotData['bankName'] as String?;
+    _bankAccountNumber = castToType<int>(snapshotData['bankAccountNumber']);
+    _bankAccountName = snapshotData['bankAccountName'] as String?;
+    _isActive = snapshotData['isActive'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -94,6 +118,10 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  String? bankName,
+  int? bankAccountNumber,
+  String? bankAccountName,
+  bool? isActive,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -103,6 +131,10 @@ Map<String, dynamic> createUsersRecordData({
       'uid': uid,
       'created_time': createdTime,
       'phone_number': phoneNumber,
+      'bankName': bankName,
+      'bankAccountNumber': bankAccountNumber,
+      'bankAccountName': bankAccountName,
+      'isActive': isActive,
     }.withoutNulls,
   );
 
@@ -119,7 +151,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.bankName == e2?.bankName &&
+        e1?.bankAccountNumber == e2?.bankAccountNumber &&
+        e1?.bankAccountName == e2?.bankAccountName &&
+        e1?.isActive == e2?.isActive;
   }
 
   @override
@@ -129,7 +165,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.bankName,
+        e?.bankAccountNumber,
+        e?.bankAccountName,
+        e?.isActive
       ]);
 
   @override

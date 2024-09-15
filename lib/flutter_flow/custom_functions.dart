@@ -25,3 +25,15 @@ double? sumListDouble(List<double> input) {
   }
   return sum;
 }
+
+DateTime firstDayOfTheMonth() {
+  // get the first day datetime of the current month
+  return DateTime(DateTime.now().year, DateTime.now().month, 1);
+}
+
+DateTime lastDayOftheMonth() {
+  // get the last day datetime of the current month
+  final now = DateTime.now();
+  final lastDay = DateTime(now.year, now.month + 1, 0);
+  return lastDay;
+}

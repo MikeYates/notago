@@ -13,3 +13,5 @@ export '/invoice_file/invoice_file_widget.dart' show InvoiceFileWidget;
 export '/view_invoice/view_invoice_widget.dart' show ViewInvoiceWidget;
 export '/edit_invoice/edit_invoice_widget.dart' show EditInvoiceWidget;
 export '/refund_policy/refund_policy_widget.dart' show RefundPolicyWidget;
+export '/contact/contact_widget.dart' show ContactWidget;
+export '/checkout/checkout_widget.dart' show CheckoutWidget;

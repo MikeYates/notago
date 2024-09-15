@@ -9,6 +9,7 @@ import 'schema/invoices_record.dart';
 import 'schema/invoice_items_record.dart';
 import 'schema/users_record.dart';
 import 'schema/notification_record.dart';
+import 'schema/invoice_payments_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -21,6 +22,7 @@ export 'schema/invoices_record.dart';
 export 'schema/invoice_items_record.dart';
 export 'schema/users_record.dart';
 export 'schema/notification_record.dart';
+export 'schema/invoice_payments_record.dart';
 
 /// Functions to query InvoicesRecords (as a Stream and as a Future).
 Future<int> queryInvoicesRecordCount({
@@ -165,6 +167,43 @@ Future<List<NotificationRecord>> queryNotificationRecordOnce({
     queryCollectionOnce(
       NotificationRecord.collection,
       NotificationRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query InvoicePaymentsRecords (as a Stream and as a Future).
+Future<int> queryInvoicePaymentsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      InvoicePaymentsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<InvoicePaymentsRecord>> queryInvoicePaymentsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      InvoicePaymentsRecord.collection,
+      InvoicePaymentsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<InvoicePaymentsRecord>> queryInvoicePaymentsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      InvoicePaymentsRecord.collection,
+      InvoicePaymentsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

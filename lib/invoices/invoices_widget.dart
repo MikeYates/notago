@@ -224,8 +224,11 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                               valueOrDefault<String>(
                                                 invoicesInvoicesRecordList
                                                     .where((e) =>
-                                                        e.invoiceDueDate! <
-                                                        getCurrentTimestamp)
+                                                        (e.invoiceDueDate! <
+                                                            getCurrentTimestamp) &&
+                                                        (e.invoiceStatus ==
+                                                            InvoiceStatus
+                                                                .Unpaid))
                                                     .toList()
                                                     .length
                                                     .toString(),
